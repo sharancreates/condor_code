@@ -20,6 +20,9 @@ class RouteConstants {
   /// Staging-only sign-in (Firebase Auth); dev/prod skip this flow.
   static const String stagingLogin = '/stagingLogin';
 
+  /// Prod/dev sign-in (Firebase Auth). Staging uses [stagingLogin].
+  static const String login = '/login';
+
   static const String knowledgeCheck = '/courses';
 
   /// Knowledge base root (redirects to [knowledgeBaseHome]).
@@ -29,6 +32,7 @@ class RouteConstants {
   static const String knowledgeBaseHome = '/knowledgeBase/home';
   static const String knowledgeBaseRoadmap = '/knowledgeBase/roadmap';
   static const String knowledgeBaseResources = '/knowledgeBase/resources';
+  static const String lessonSummary = '/lesson-summary';
 
   static const String testDetails = '/course/:courseId/:lessonId/tests/:testId';
   static const String tests = '/course/:courseId/:lessonId/tests';

@@ -46,7 +46,7 @@ class _ResultScreenState extends State<ResultScreen> {
     final int sumAnswers = widget.inCorrectAnswer + widget.correctAnswer;
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: AppColors.grey800,
+      backgroundColor: context.colors.scaffoldBackground,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
@@ -76,7 +76,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     context.pop();
                   }
                 },
-                style: AppButtonStyles.mainButtonStyle,
+                style: AppButtonStyles.mainButtonStyle(context),
                 child: Text(l10n.resultGetPoints, style: AppTextStyles.body2),
               ),
             ),

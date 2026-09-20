@@ -2,9 +2,11 @@ import 'package:condor_code/config/app_config.dart';
 import 'package:condor_code/di/provider_manager.dart';
 import 'package:condor_code/ui/analytics/analytics.dart';
 import 'package:condor_code/ui/analytics/analytics_navigator_observer.dart';
+import 'package:condor_code/ui/navigation/auth_session_notifier.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
 import 'package:condor_code/ui/navigation/route_observers.dart';
 import 'package:condor_code/ui/navigation/staging_gate_notifier.dart';
+import 'package:condor_code/ui/screens/auth/login_screen.dart';
 import 'package:condor_code/ui/screens/contacts/contacts_screen.dart';
 import 'package:condor_code/ui/screens/course/course_screen.dart';
 import 'package:condor_code/ui/screens/courses/courses_list_screen.dart';
@@ -27,12 +29,13 @@ import 'package:domain/domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:condor_code/ui/screens/test_selection/test_selection_screen.dart';
-import 'package:condor_code/ui/screens/test_selection/test_selection_cubit.dart';
-import 'package:condor_code/ui/screens/test/test_screen.dart';
-import 'package:condor_code/ui/screens/result_screen.dart';
 import 'package:condor_code/ui/screens/heart_information_screen.dart';
+import 'package:condor_code/ui/screens/lesson_summary/lesson_summary_screen.dart';
+import 'package:condor_code/ui/screens/result_screen.dart';
+import 'package:condor_code/ui/screens/test/test_screen.dart';
+import 'package:condor_code/ui/screens/test_selection/test_selection_cubit.dart';
+import 'package:condor_code/ui/screens/test_selection/test_selection_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -50,9 +53,12 @@ bool get _isDesktopWeb {
 
 BuildContext get globalContext => _rootNavigatorKey.currentContext!;
 
+String _authenticatedHome() =>
+    _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+
 String _initialLocation(AppConfig appConfig) {
   if (appConfig.isStaging) return RouteConstants.stagingLogin;
-  return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+  return _authenticatedHome();
 }
 
 CustomTransitionPage<void> _fadeTransitionPage({
@@ -89,12 +95,11 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
   navigatorKey: _rootNavigatorKey,
   observers: _getObservers(appConfig),
   initialLocation: _initialLocation(appConfig),
-  refreshListenable: appConfig.isStaging ? di<StagingGateNotifier>() : null,
+  refreshListenable: appConfig.isStaging
+      ? di<StagingGateNotifier>()
+      : di<AuthSessionNotifier>(),
   redirect: (context, state) {
     final p = state.uri.path;
-    if (!appConfig.isStaging && p == RouteConstants.stagingLogin) {
-      return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
-    }
     if (p == RouteConstants.knowledgeBase ||
         p == RouteConstants.knowledgeBaseTrailingSlash) {
       return RouteConstants.knowledgeBaseHome;
@@ -116,18 +121,33 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
         return RouteConstants.onlyTesters;
       }
 
-      if (!gate.shouldBlockStagingAccess && p == RouteConstants.stagingLogin) {
-        return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+      if (!gate.shouldBlockStagingAccess &&
+          (p == RouteConstants.stagingLogin || p == RouteConstants.login)) {
+        return _authenticatedHome();
       }
 
       if (!gate.shouldBlockStagingAccess && p == RouteConstants.onlyTesters) {
-        return _isDesktopWeb ? RouteConstants.home : RouteConstants.courses;
+        return _authenticatedHome();
       }
+
+      return null;
+    }
+
+    final session = di<AuthSessionNotifier>();
+    if (session.hasFirebaseSession &&
+        (p == RouteConstants.login ||
+            p == RouteConstants.stagingLogin ||
+            p == RouteConstants.onlyTesters)) {
+      return _authenticatedHome();
     }
 
     return null;
   },
   routes: <RouteBase>[
+    GoRoute(
+      path: RouteConstants.login,
+      builder: (context, state) => const LoginScreen(),
+    ),
     GoRoute(
       path: RouteConstants.stagingLogin,
       builder: (context, state) => const StagingLoginScreen(),
@@ -189,6 +209,22 @@ GoRouter getRouter(AppConfig appConfig) => GoRouter(
                     courseName: courseName,
                     initialTaskId: taskId.isEmpty ? null : taskId,
                   ),
+                );
+              },
+            ),
+            GoRoute(
+              path: RouteConstants.lessonSummary,
+              pageBuilder: (context, state) {
+                final lesson = state.extra as Lesson?;
+                if (lesson == null) {
+                  return _fadeTransitionPage(
+                    state: state,
+                    child: const EmptyCourseScreen(courseName: 'Dart/Flutter'),
+                  );
+                }
+                return _fadeTransitionPage(
+                  state: state,
+                  child: LessonSummaryScreen(lesson: lesson),
                 );
               },
             ),

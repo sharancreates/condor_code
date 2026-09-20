@@ -26,10 +26,37 @@ class LessonDetailsScreen extends StatelessWidget {
       child: BlocBuilder<LessonDetailsCubit, LessonDetailsState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: AppColors.grey800,
+            backgroundColor: context.colors.scaffoldBackground,
             body: SafeArea(child: _MainContent(state: state)),
           );
         },
+      ),
+    );
+  }
+}
+
+class _SummaryButton extends StatelessWidget {
+  final Lesson lesson;
+
+  const _SummaryButton({required this.lesson});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 16, left: 16, bottom: 8),
+      child: SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () {
+            di<Analytics>().logEvent(AnalyticsEventName.buttonClick, {
+              AnalyticsPropertyName.buttonId: AnalyticsButtonId.summary,
+              AnalyticsPropertyName.lessonId: lesson.id,
+            });
+            context.push(RouteConstants.lessonSummary, extra: lesson);
+          },
+          style: AppButtonStyles.mainButtonStyle(context),
+          child: Text(localization.summary),
+        ),
       ),
     );
   }
@@ -56,7 +83,7 @@ class _CheckButton extends StatelessWidget {
             });
             context.push(RouteConstants.tasksListScreen);
           },
-          style: AppButtonStyles.mainButtonStyle,
+          style: AppButtonStyles.mainButtonStyle(context),
           child: Text(localization.checkMyKnowledge),
         ),
       ),
@@ -75,7 +102,9 @@ class _DescriptionText extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 18, right: 24, left: 24),
       child: Text(
         description,
-        style: AppTextStyles.body3.copyWith(color: AppColors.lightGrey),
+        style: AppTextStyles.body3.copyWith(
+          color: context.colors.textSecondary,
+        ),
       ),
     );
   }
@@ -100,7 +129,7 @@ class _WatchOnYouTubeTextButton extends StatelessWidget {
       },
       child: Text(
         localization.watchOnYouTube,
-        style: AppTextStyles.body2.copyWith(color: AppColors.neon),
+        style: AppTextStyles.body2.copyWith(color: context.colors.accent),
       ),
     );
   }
@@ -202,19 +231,31 @@ class _MainContent extends StatelessWidget {
       LessonDetailsLoading() => const Expanded(child: _LessonDetailsSkeleton()),
       LessonDetailsLoaded() => Expanded(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             TopNavigationBar(text: state.lesson.title),
-            Text(
-              state.lesson.topic,
-              style: AppTextStyles.h2.copyWith(color: AppColors.neon),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(
+                      state.lesson.topic,
+                      style: AppTextStyles.h2.copyWith(
+                        color: context.colors.accent,
+                      ),
+                    ),
+                    _YouTubePlayer(youtubeUrl: state.lesson.youtubeUrl),
+                    state.lesson.isYouTubeLesson
+                        ? _WatchOnYouTubeTextButton(
+                            youtubeUrl: state.lesson.youtubeUrl,
+                          )
+                        : const SizedBox.shrink(),
+                    _DescriptionText(description: state.lesson.description),
+                    const SizedBox(height: 24),
+                    _SummaryButton(lesson: state.lesson),
+                  ],
+                ),
+              ),
             ),
-            _YouTubePlayer(youtubeUrl: state.lesson.youtubeUrl),
-            state.lesson.isYouTubeLesson
-                ? _WatchOnYouTubeTextButton(youtubeUrl: state.lesson.youtubeUrl)
-                : const SizedBox.shrink(),
-            _DescriptionText(description: state.lesson.description),
-            SizedBox(height: MediaQuery.of(context).size.height * 0.10),
             _CheckButton(lesson: state.lesson),
           ],
         ),

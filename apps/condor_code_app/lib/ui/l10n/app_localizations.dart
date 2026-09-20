@@ -260,6 +260,18 @@ abstract class AppLocalizations {
   /// **'Start Test'**
   String get startTest;
 
+  /// No description provided for @summary.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary'**
+  String get summary;
+
+  /// No description provided for @noSummaryAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No summary available'**
+  String get noSummaryAvailable;
+
   /// No description provided for @invalidYouTubeLink.
   ///
   /// In en, this message translates to:
@@ -341,7 +353,7 @@ abstract class AppLocalizations {
   /// No description provided for @homeIntro.
   ///
   /// In en, this message translates to:
-  /// **'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers, and check your results.'**
+  /// **'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers[...]'**
   String get homeIntro;
 
   /// No description provided for @featureLessonsTitle.
@@ -979,6 +991,306 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Patron + Developer'**
   String get stagingRolePatronDeveloper;
+
+  /// No description provided for @signInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signInTitle;
+
+  /// No description provided for @signInSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in to continue.'**
+  String get signInSubtitle;
+
+  /// No description provided for @signInEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get signInEmailLabel;
+
+  /// No description provided for @signInPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get signInPasswordLabel;
+
+  /// No description provided for @signInButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get signInButton;
+
+  /// No description provided for @signInMissingCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter email and password'**
+  String get signInMissingCredentials;
+
+  /// No description provided for @signInErrorWrongCredentials.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong email or password.'**
+  String get signInErrorWrongCredentials;
+
+  /// No description provided for @signInErrorAccountNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No account exists with this email address.'**
+  String get signInErrorAccountNotFound;
+
+  /// No description provided for @signInErrorInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address.'**
+  String get signInErrorInvalidEmail;
+
+  /// No description provided for @signInErrorUserDisabled.
+  ///
+  /// In en, this message translates to:
+  /// **'This account has been disabled.'**
+  String get signInErrorUserDisabled;
+
+  /// No description provided for @signInErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in failed. Please try again.'**
+  String get signInErrorGeneric;
+
+  /// No description provided for @signUpSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an account to continue.'**
+  String get signUpSubtitle;
+
+  /// No description provided for @signUpNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get signUpNameLabel;
+
+  /// No description provided for @signUpMissingFields.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter name, email, and password'**
+  String get signUpMissingFields;
+
+  /// No description provided for @signUpConfirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm password'**
+  String get signUpConfirmPasswordLabel;
+
+  /// No description provided for @signUpButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get signUpButton;
+
+  /// No description provided for @signUpPasswordsMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match.'**
+  String get signUpPasswordsMismatch;
+
+  /// No description provided for @signUpErrorEmailInUse.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists.'**
+  String get signUpErrorEmailInUse;
+
+  /// No description provided for @signUpErrorWeakPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak. Use at least 6 characters.'**
+  String get signUpErrorWeakPassword;
+
+  /// No description provided for @signUpErrorGeneric.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not create account. Please try again.'**
+  String get signUpErrorGeneric;
+
+  /// No description provided for @switchToSignUp.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? Sign up'**
+  String get switchToSignUp;
+
+  /// No description provided for @switchToSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Sign in'**
+  String get switchToSignIn;
+
+  /// No description provided for @signInWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get signInWithGoogle;
+
+  /// No description provided for @signInWithGoogleError.
+  ///
+  /// In en, this message translates to:
+  /// **'Google sign-in failed. Please try again.'**
+  String get signInWithGoogleError;
+
+  /// No description provided for @signInWithGoogleAccountExists.
+  ///
+  /// In en, this message translates to:
+  /// **'An account with this email already exists. Sign in with email and password.'**
+  String get signInWithGoogleAccountExists;
+
+  /// No description provided for @accountTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountTitle;
+
+  /// No description provided for @accountSignOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get accountSignOut;
+
+  /// No description provided for @accountSignOutConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get accountSignOutConfirmTitle;
+
+  /// No description provided for @accountSignOutConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to sign out?'**
+  String get accountSignOutConfirm;
+
+  /// No description provided for @accountCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get accountCancel;
+
+  /// No description provided for @leaveFeedback.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave feedback'**
+  String get leaveFeedback;
+
+  /// No description provided for @feedbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave feedback'**
+  String get feedbackTitle;
+
+  /// No description provided for @feedbackLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Your feedback *'**
+  String get feedbackLabel;
+
+  /// No description provided for @feedbackHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write your feedback'**
+  String get feedbackHint;
+
+  /// No description provided for @feedbackEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get feedbackEmailLabel;
+
+  /// No description provided for @feedbackEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get feedbackEmailHint;
+
+  /// No description provided for @feedbackSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get feedbackSubmit;
+
+  /// No description provided for @feedbackCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get feedbackCancel;
+
+  /// No description provided for @feedbackSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for your feedback!'**
+  String get feedbackSuccess;
+
+  /// No description provided for @feedbackError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to send feedback. Try again.'**
+  String get feedbackError;
+
+  /// No description provided for @feedbackRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get feedbackRequired;
+
+  /// No description provided for @feedbackMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Feedback must contain at least 10 characters'**
+  String get feedbackMinLength;
+
+  /// No description provided for @feedbackInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address'**
+  String get feedbackInvalidEmail;
+
+  /// No description provided for @moveOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Move on'**
+  String get moveOn;
+
+  /// No description provided for @answerResultCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Everything is right, great!'**
+  String get answerResultCorrect;
+
+  /// No description provided for @answerResultIncorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong, correct answer: {number}.'**
+  String answerResultIncorrect(int number);
+
+  /// No description provided for @answerResultMistakesInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Now we will work on the mistakes.'**
+  String get answerResultMistakesInfo;
+
+  /// No description provided for @languageSwitcherTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get languageSwitcherTooltip;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageUkrainian.
+  ///
+  /// In en, this message translates to:
+  /// **'Ukrainian'**
+  String get languageUkrainian;
 
   /// No description provided for @resultPerfectLesson.
   ///

@@ -14,7 +14,7 @@ class ExitFromTestBottomSheet extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-            color: AppColors.grey800,
+            color: context.colors.scaffoldBackground,
             height: 200,
             child: Column(
               children: <Widget>[
@@ -31,7 +31,7 @@ class ExitFromTestBottomSheet extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
-                  style: AppButtonStyles.mainButtonStyle,
+                  style: AppButtonStyles.mainButtonStyle(context),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -39,15 +39,15 @@ class ExitFromTestBottomSheet extends StatelessWidget {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  style: AppButtonStyles.smallButtonStyle,
+                  style: AppButtonStyles.smallButtonStyle(context),
                   onPressed: () {
                     Navigator.pop(context);
                     context.pop();
                   },
                   child: Text(
                     l10n.exit,
-                    style: const TextStyle(
-                      color: AppColors.alertRed,
+                    style: TextStyle(
+                      color: context.colors.alert,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),

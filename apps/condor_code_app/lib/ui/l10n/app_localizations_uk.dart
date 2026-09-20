@@ -105,6 +105,12 @@ class AppLocalizationsUk extends AppLocalizations {
   String get startTest => 'Почати тест';
 
   @override
+  String get summary => 'Конспект';
+
+  @override
+  String get noSummaryAvailable => 'Конспект ще не додано';
+
+  @override
   String get invalidYouTubeLink => 'Помилка: Недійсне посилання на YouTube';
 
   @override
@@ -503,6 +509,165 @@ class AppLocalizationsUk extends AppLocalizations {
   String get stagingRolePatronDeveloper => 'Патрон + Розробник';
 
   @override
+  String get signInTitle => 'Вхід';
+
+  @override
+  String get signInSubtitle => 'Увійдіть, щоб продовжити.';
+
+  @override
+  String get signInEmailLabel => 'Електронна пошта';
+
+  @override
+  String get signInPasswordLabel => 'Пароль';
+
+  @override
+  String get signInButton => 'Увійти';
+
+  @override
+  String get signInMissingCredentials => 'Введіть електронну пошту та пароль';
+
+  @override
+  String get signInErrorWrongCredentials => 'Невірна пошта або пароль.';
+
+  @override
+  String get signInErrorAccountNotFound =>
+      'Облікового запису з такою адресою не існує.';
+
+  @override
+  String get signInErrorInvalidEmail => 'Введіть коректну адресу пошти.';
+
+  @override
+  String get signInErrorUserDisabled => 'Цей обліковий запис вимкнено.';
+
+  @override
+  String get signInErrorGeneric => 'Не вдалося увійти. Спробуйте ще раз.';
+
+  @override
+  String get signUpSubtitle => 'Створіть обліковий запис, щоб продовжити.';
+
+  @override
+  String get signUpNameLabel => 'Ім\'я';
+
+  @override
+  String get signUpMissingFields => 'Введіть ім\'я, пошту та пароль';
+
+  @override
+  String get signUpConfirmPasswordLabel => 'Підтвердіть пароль';
+
+  @override
+  String get signUpButton => 'Створити обліковий запис';
+
+  @override
+  String get signUpPasswordsMismatch => 'Паролі не збігаються.';
+
+  @override
+  String get signUpErrorEmailInUse =>
+      'Обліковий запис з такою поштою вже існує.';
+
+  @override
+  String get signUpErrorWeakPassword =>
+      'Пароль занадто слабкий. Використайте щонайменше 6 символів.';
+
+  @override
+  String get signUpErrorGeneric =>
+      'Не вдалося створити обліковий запис. Спробуйте ще раз.';
+
+  @override
+  String get switchToSignUp => 'Немає облікового запису? Зареєструватися';
+
+  @override
+  String get switchToSignIn => 'Вже є обліковий запис? Увійти';
+
+  @override
+  String get signInWithGoogle => 'Продовжити з Google';
+
+  @override
+  String get signInWithGoogleError =>
+      'Не вдалося увійти через Google. Спробуйте ще раз.';
+
+  @override
+  String get signInWithGoogleAccountExists =>
+      'Обліковий запис з такою поштою вже існує. Увійдіть з поштою та паролем.';
+
+  @override
+  String get accountTitle => 'Акаунт';
+
+  @override
+  String get accountSignOut => 'Вийти';
+
+  @override
+  String get accountSignOutConfirmTitle => 'Вийти з акаунту';
+
+  @override
+  String get accountSignOutConfirm => 'Ви впевнені, що хочете вийти?';
+
+  @override
+  String get accountCancel => 'Скасувати';
+
+  @override
+  String get leaveFeedback => 'Залишити відгук';
+
+  @override
+  String get feedbackTitle => 'Залишити відгук';
+
+  @override
+  String get feedbackLabel => 'Ваш відгук *';
+
+  @override
+  String get feedbackHint => 'Напишіть ваш відгук';
+
+  @override
+  String get feedbackEmailLabel => 'Електронна пошта';
+
+  @override
+  String get feedbackEmailHint => 'Введіть вашу пошту';
+
+  @override
+  String get feedbackSubmit => 'Надіслати';
+
+  @override
+  String get feedbackCancel => 'Скасувати';
+
+  @override
+  String get feedbackSuccess => 'Дякуємо за ваш відгук!';
+
+  @override
+  String get feedbackError => 'Не вдалося надіслати відгук. Спробуйте ще раз.';
+
+  @override
+  String get feedbackRequired => 'Це поле обов\'язкове';
+
+  @override
+  String get feedbackMinLength => 'Відгук має містити щонайменше 10 символів';
+
+  @override
+  String get feedbackInvalidEmail =>
+      'Введіть коректну адресу електронної пошти';
+
+  @override
+  String get moveOn => 'Далі';
+
+  @override
+  String get answerResultCorrect => 'Все правильно, чудово!';
+
+  @override
+  String answerResultIncorrect(int number) {
+    return 'Неправильно, правильна відповідь: $number.';
+  }
+
+  @override
+  String get answerResultMistakesInfo => 'Зараз попрацюємо над помилками.';
+
+  @override
+  String get languageSwitcherTooltip => 'Мова';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageUkrainian => 'Українська';
+
+  @override
   String get resultPerfectLesson => 'Ідеальний урок!';
 
   @override
@@ -555,7 +720,8 @@ class AppLocalizationsUk extends AppLocalizations {
   String get testSelectionLessonDataEmpty => 'Дані уроку порожні.';
 
   @override
-  String get testSelectionNoQuestions => 'Немає доступних запитань для цього тесту.';
+  String get testSelectionNoQuestions =>
+      'Немає доступних запитань для цього тесту.';
 
   @override
   String testSelectionPracticeTest(String lessonTitle) {
@@ -569,5 +735,6 @@ class AppLocalizationsUk extends AppLocalizations {
   String get testSelectionStatusReady => 'Готовий';
 
   @override
-  String get testSelectionFailedToLoad => 'Не вдалося завантажити деталі тесту.';
+  String get testSelectionFailedToLoad =>
+      'Не вдалося завантажити деталі тесту.';
 }

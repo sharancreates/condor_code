@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:go_router/go_router.dart';
 import 'package:condor_code/ui/l10n/app_localizations.dart';
-
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class HeartInformationScreen extends StatelessWidget {
@@ -11,8 +10,9 @@ class HeartInformationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
-      backgroundColor: AppColors.grey800,
+      backgroundColor: context.colors.scaffoldBackground,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,7 +28,7 @@ class HeartInformationScreen extends StatelessWidget {
                 onPressed: () {
                   context.pop();
                 },
-                style: AppButtonStyles.mainButtonStyle,
+                style: AppButtonStyles.mainButtonStyle(context),
                 child: Text(l10n.testMoveOn, style: AppTextStyles.button),
               ),
             ),

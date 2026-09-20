@@ -105,6 +105,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get startTest => 'Start Test';
 
   @override
+  String get summary => 'Summary';
+
+  @override
+  String get noSummaryAvailable => 'No summary available';
+
+  @override
   String get invalidYouTubeLink => 'Error: Invalid YouTube link';
 
   @override
@@ -146,7 +152,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get homeIntro =>
-      'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers, and check your results.';
+      'You are on the Condor Code website — a platform created by students of individual mentor Oleh Savenko. Here you can learn Flutter and Dart, find lessons and homework with answers[...]';
 
   @override
   String get featureLessonsTitle => 'Flutter and Dart Lessons';
@@ -504,6 +510,165 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stagingRolePatronDeveloper => 'Patron + Developer';
 
   @override
+  String get signInTitle => 'Sign in';
+
+  @override
+  String get signInSubtitle => 'Sign in to continue.';
+
+  @override
+  String get signInEmailLabel => 'Email';
+
+  @override
+  String get signInPasswordLabel => 'Password';
+
+  @override
+  String get signInButton => 'Sign in';
+
+  @override
+  String get signInMissingCredentials => 'Enter email and password';
+
+  @override
+  String get signInErrorWrongCredentials => 'Wrong email or password.';
+
+  @override
+  String get signInErrorAccountNotFound =>
+      'No account exists with this email address.';
+
+  @override
+  String get signInErrorInvalidEmail => 'Enter a valid email address.';
+
+  @override
+  String get signInErrorUserDisabled => 'This account has been disabled.';
+
+  @override
+  String get signInErrorGeneric => 'Sign-in failed. Please try again.';
+
+  @override
+  String get signUpSubtitle => 'Create an account to continue.';
+
+  @override
+  String get signUpNameLabel => 'Name';
+
+  @override
+  String get signUpMissingFields => 'Enter name, email, and password';
+
+  @override
+  String get signUpConfirmPasswordLabel => 'Confirm password';
+
+  @override
+  String get signUpButton => 'Create account';
+
+  @override
+  String get signUpPasswordsMismatch => 'Passwords do not match.';
+
+  @override
+  String get signUpErrorEmailInUse =>
+      'An account with this email already exists.';
+
+  @override
+  String get signUpErrorWeakPassword =>
+      'Password is too weak. Use at least 6 characters.';
+
+  @override
+  String get signUpErrorGeneric =>
+      'Could not create account. Please try again.';
+
+  @override
+  String get switchToSignUp => 'Don\'t have an account? Sign up';
+
+  @override
+  String get switchToSignIn => 'Already have an account? Sign in';
+
+  @override
+  String get signInWithGoogle => 'Continue with Google';
+
+  @override
+  String get signInWithGoogleError =>
+      'Google sign-in failed. Please try again.';
+
+  @override
+  String get signInWithGoogleAccountExists =>
+      'An account with this email already exists. Sign in with email and password.';
+
+  @override
+  String get accountTitle => 'Account';
+
+  @override
+  String get accountSignOut => 'Sign out';
+
+  @override
+  String get accountSignOutConfirmTitle => 'Sign out';
+
+  @override
+  String get accountSignOutConfirm => 'Are you sure you want to sign out?';
+
+  @override
+  String get accountCancel => 'Cancel';
+
+  @override
+  String get leaveFeedback => 'Leave feedback';
+
+  @override
+  String get feedbackTitle => 'Leave feedback';
+
+  @override
+  String get feedbackLabel => 'Your feedback *';
+
+  @override
+  String get feedbackHint => 'Write your feedback';
+
+  @override
+  String get feedbackEmailLabel => 'Email';
+
+  @override
+  String get feedbackEmailHint => 'Enter your email';
+
+  @override
+  String get feedbackSubmit => 'Submit';
+
+  @override
+  String get feedbackCancel => 'Cancel';
+
+  @override
+  String get feedbackSuccess => 'Thank you for your feedback!';
+
+  @override
+  String get feedbackError => 'Failed to send feedback. Try again.';
+
+  @override
+  String get feedbackRequired => 'This field is required';
+
+  @override
+  String get feedbackMinLength =>
+      'Feedback must contain at least 10 characters';
+
+  @override
+  String get feedbackInvalidEmail => 'Enter a valid email address';
+
+  @override
+  String get moveOn => 'Move on';
+
+  @override
+  String get answerResultCorrect => 'Everything is right, great!';
+
+  @override
+  String answerResultIncorrect(int number) {
+    return 'Wrong, correct answer: $number.';
+  }
+
+  @override
+  String get answerResultMistakesInfo => 'Now we will work on the mistakes.';
+
+  @override
+  String get languageSwitcherTooltip => 'Language';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
+  String get languageUkrainian => 'Ukrainian';
+
+  @override
   String get resultPerfectLesson => 'Perfect lesson!';
 
   @override
@@ -556,7 +721,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get testSelectionLessonDataEmpty => 'Lesson data is empty.';
 
   @override
-  String get testSelectionNoQuestions => 'No questions available for this test.';
+  String get testSelectionNoQuestions =>
+      'No questions available for this test.';
 
   @override
   String testSelectionPracticeTest(String lessonTitle) {

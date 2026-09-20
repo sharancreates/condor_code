@@ -86,7 +86,7 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
-                        style: AppButtonStyles.smallButtonStyle,
+                        style: AppButtonStyles.smallButtonStyle(context),
                         onPressed: () =>
                             context.read<TestSelectionCubit>().loadTests(),
                         child: Text(
@@ -136,7 +136,7 @@ class _TestSelectionScreenState extends State<TestSelectionScreen> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        style: AppButtonStyles.mainButtonStyle,
+                        style: AppButtonStyles.mainButtonStyle(context),
                         onPressed: selectedTestId == null
                             ? null
                             : () {

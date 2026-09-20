@@ -8,6 +8,7 @@ import 'package:data/data_sources/remote/models/task_remote.dart';
 import 'package:data/data_sources/remote/models/tester_access_request_remote.dart';
 import 'package:data/data_sources/remote/models/user_remote.dart';
 import 'package:domain/models/enums/knowledge_base_news_category.dart';
+import 'package:domain/models/feedback_model.dart';
 import 'package:domain/models/knowledge_base_news_item.dart';
 
 class MockRemoteDataManager implements RemoteDataManager {
@@ -175,6 +176,7 @@ class MockRemoteDataManager implements RemoteDataManager {
   Future<UserRemote> signUpWithEmailPassword({
     required String email,
     required String password,
+    required String fullName,
   }) {
     return Future.delayed(const Duration(milliseconds: 500), () => _mockUser);
   }
@@ -258,5 +260,11 @@ class MockRemoteDataManager implements RemoteDataManager {
       const Duration(milliseconds: 250),
       () => mockKnowledgeBaseRoadmapJson,
     );
+  }
+
+  @override
+  Future<String> saveFeedback(FeedbackModel feedback) {
+    // TODO: implement saveFeedback
+    throw UnimplementedError();
   }
 }

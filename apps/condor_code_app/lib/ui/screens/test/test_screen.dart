@@ -79,7 +79,7 @@ class _TestScreenState extends State<TestScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.grey800,
+        backgroundColor: context.colors.scaffoldBackground,
         resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Focus(
@@ -149,8 +149,8 @@ class _TestScreenState extends State<TestScreen> {
                           child: Skeleton(
                             name: CondorHollowSkeletonIds.lessonScreen,
                             loading: true,
-                            color: AppColors.grey600.withValues(alpha: 0.45),
-                            highlightColor: AppColors.neon.withValues(
+                            color: context.colors.surface.withValues(alpha: 0.45),
+                            highlightColor: context.colors.accent.withValues(
                               alpha: 0.1,
                             ),
                             child: const SizedBox.shrink(),
@@ -192,7 +192,7 @@ class _TestScreenState extends State<TestScreen> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
                           child: ElevatedButton(
-                            style: AppButtonStyles.mainButtonStyle,
+                            style: AppButtonStyles.mainButtonStyle(context),
                             onPressed: () {
                               BlocProvider.of<QuestionsBloc>(
                                 context,

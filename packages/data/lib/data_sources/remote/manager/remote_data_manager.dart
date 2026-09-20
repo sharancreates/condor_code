@@ -5,6 +5,7 @@ import 'package:data/data_sources/remote/models/question_remote.dart';
 import 'package:data/data_sources/remote/models/task_remote.dart';
 import 'package:data/data_sources/remote/models/tester_access_request_remote.dart';
 import 'package:data/data_sources/remote/models/user_remote.dart';
+import 'package:domain/models/feedback_model.dart';
 import 'package:domain/models/knowledge_base_news_item.dart';
 
 /// Remote service: Firebase logic, REST API calls, etc.
@@ -27,6 +28,7 @@ abstract class RemoteDataManager {
   Future<UserRemote> signUpWithEmailPassword({
     required String email,
     required String password,
+    required String fullName,
   });
 
   Future<void> createUserProfile({
@@ -118,6 +120,8 @@ abstract class RemoteDataManager {
   });
 
   Future<void> rejectTesterAccessRequest({required String requestId});
+
+  Future<String> saveFeedback(FeedbackModel feedback);
 
   Future<List<KnowledgeBaseNewsItem>> fetchKnowledgeBaseNews();
 

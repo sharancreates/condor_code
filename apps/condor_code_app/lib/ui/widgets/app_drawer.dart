@@ -1,10 +1,17 @@
 import 'package:condor_code/config/app_config.dart';
 import 'package:condor_code/di/provider_manager.dart';
+import 'package:condor_code/ui/l10n/app_localizations.dart';
 import 'package:condor_code/ui/navigation/route_constants.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_cubit.dart';
+import 'package:condor_code/ui/screens/auth/auth_cubit/auth_state.dart';
+import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_cubit.dart';
+import 'package:condor_code/ui/screens/staging/staging_auth_cubit/staging_auth_state.dart';
 import 'package:condor_code/ui/utils/localization.dart';
+import 'package:condor_code/ui/widgets/app_theme_toggle_button.dart';
 import 'package:condor_code/ui/widgets/drawer_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ui_kit/ui_kit.dart';
 
@@ -14,7 +21,7 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: AppColors.grey800,
+      backgroundColor: context.colors.scaffoldBackground,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +34,6 @@ class AppDrawer extends StatelessWidget {
                 fontSize: 17,
                 onTap: kIsWeb
                     ? () {
-                        // TODO rename to home
                         context.go(RouteConstants.home);
                         Navigator.pop(context);
                       }
@@ -58,18 +64,70 @@ class AppDrawer extends StatelessWidget {
                 Navigator.pop(context);
               },
             ),
-            // TODO: uncomment when knowledge base is ready
-            // DrawerItem(
-            //   title: localization.knowledgeBase,
-            //   onTap: () {
-            //     context.go(RouteConstants.knowledgeBase);
-            //     Navigator.pop(context);
-            //   },
-            // ),
+            const Spacer(),
+            _DrawerAuthAction(onLogout: () => _confirmLogout(context)),
+            const Align(
+              alignment: Alignment.centerRight,
+              child: AppThemeToggleButton(),
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _confirmLogout(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
+    final isStaging = di<AppConfig>().isStaging;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: context.colors.popupSurface,
+        surfaceTintColor: Colors.transparent,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text(
+          isStaging
+              ? l10n.stagingProfileSignOutConfirmTitle
+              : l10n.accountSignOutConfirmTitle,
+          style: AppTextStyles.h2.copyWith(color: context.colors.textPrimary),
+        ),
+        content: Text(
+          isStaging
+              ? l10n.stagingProfileSignOutConfirm
+              : l10n.accountSignOutConfirm,
+          style: AppTextStyles.body1.copyWith(
+            color: context.colors.textSecondary,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(
+              isStaging ? l10n.stagingProfileCancel : l10n.accountCancel,
+              style: AppTextStyles.body2.copyWith(
+                color: context.colors.textSecondary,
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: Text(
+              isStaging ? l10n.stagingProfileSignOut : l10n.accountSignOut,
+              style: AppTextStyles.body2.copyWith(color: context.colors.accent),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true || !context.mounted) return;
+    Navigator.pop(context);
+    if (isStaging) {
+      await di<StagingAuthCubit>().logout();
+    } else {
+      await di<AuthCubit>().logout();
+    }
   }
 
   AppLogoLabel _getLogoLabel() => switch (di<AppConfig>().buildType) {
@@ -77,4 +135,43 @@ class AppDrawer extends StatelessWidget {
     BuildType.staging => AppLogoLabel.staging,
     BuildType.prod => AppLogoLabel.prod,
   };
+}
+
+class _DrawerAuthAction extends StatelessWidget {
+  const _DrawerAuthAction({required this.onLogout});
+
+  final VoidCallback onLogout;
+
+  @override
+  Widget build(BuildContext context) {
+    if (di<AppConfig>().isStaging) {
+      return BlocBuilder<StagingAuthCubit, StagingAuthState>(
+        builder: (context, state) {
+          if (state.user == null) return const SizedBox.shrink();
+          return DrawerItem(
+            title: localization.stagingProfileSignOut,
+            onTap: onLogout,
+          );
+        },
+      );
+    }
+
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, state) {
+        if (state.user != null) {
+          return DrawerItem(
+            title: localization.accountSignOut,
+            onTap: onLogout,
+          );
+        }
+        return DrawerItem(
+          title: localization.signInTitle,
+          onTap: () {
+            Navigator.pop(context);
+            context.go(RouteConstants.login);
+          },
+        );
+      },
+    );
+  }
 }

@@ -9,8 +9,10 @@ import 'package:data/data_sources/remote/models/task_remote.dart';
 import 'package:data/data_sources/remote/models/tester_access_request_remote.dart';
 import 'package:data/data_sources/remote/models/user_remote.dart';
 import 'package:data/data_sources/remote/remote_document_parsers.dart';
+import 'package:domain/models/feedback_model.dart';
 import 'package:domain/models/knowledge_base_news_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
@@ -81,18 +83,26 @@ class RemoteDataManagerImpl implements RemoteDataManager {
   Future<UserRemote> signUpWithEmailPassword({
     required String email,
     required String password,
+    required String fullName,
   }) async {
+    final trimmedEmail = email.trim();
+    final trimmedName = fullName.trim();
+
     final userCredential = await _auth.createUserWithEmailAndPassword(
-      email: email.trim(),
+      email: trimmedEmail,
       password: password,
     );
 
     final user = userCredential.user;
     if (user == null) throw Exception('User creation failed');
 
+    if (trimmedName.isNotEmpty) {
+      await user.updateDisplayName(trimmedName);
+    }
+
     final userData = {
-      'fullName': '',
-      'email': email.trim(),
+      'fullName': trimmedName,
+      'email': trimmedEmail,
       'role': 'user',
       'createdAt': FieldValue.serverTimestamp(),
     };
@@ -104,8 +114,8 @@ class RemoteDataManagerImpl implements RemoteDataManager {
 
     return UserRemote(
       id: user.uid,
-      fullName: userData['fullName'] as String,
-      email: userData['email'] as String,
+      fullName: trimmedName,
+      email: trimmedEmail,
       role: userData['role'] as String,
     );
   }
@@ -145,10 +155,13 @@ class RemoteDataManagerImpl implements RemoteDataManager {
 
     final userData = snapshot.data();
     final String roleFromDb = userData?['role'] ?? 'user';
+    final String fullNameFromDb = userData?['fullName'] as String? ?? '';
 
     return UserRemote(
       id: user.uid,
-      fullName: user.displayName ?? '',
+      fullName: fullNameFromDb.isNotEmpty
+          ? fullNameFromDb
+          : (user.displayName ?? ''),
       email: user.email ?? '',
       role: roleFromDb,
     );
@@ -156,12 +169,7 @@ class RemoteDataManagerImpl implements RemoteDataManager {
 
   @override
   Future<UserRemote?> signInWithGoogle() async {
-    final credential = await _getCredentialWithGoogle();
-    if (credential == null) return null;
-
-    final userCredential = await _auth.signInWithCredential(credential);
-    final user = userCredential.user;
-
+    final user = await _signInGoogleUser();
     if (user == null) return null;
 
     final userDoc = _fireStore
@@ -190,6 +198,30 @@ class RemoteDataManagerImpl implements RemoteDataManager {
     );
   }
 
+  Future<User?> _signInGoogleUser() async {
+    if (kIsWeb) {
+      try {
+        final userCredential = await _auth.signInWithPopup(
+          GoogleAuthProvider(),
+        );
+        return userCredential.user;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'popup-closed-by-user' ||
+            e.code == 'cancelled-popup-request') {
+          Logger.print(data: 'Google Sign In cancelled by user.');
+          return null;
+        }
+        rethrow;
+      }
+    }
+
+    final credential = await _getCredentialWithGoogle();
+    if (credential == null) return null;
+
+    final userCredential = await _auth.signInWithCredential(credential);
+    return userCredential.user;
+  }
+
   Future<OAuthCredential?> _getCredentialWithGoogle() async {
     await _googleSignIn.signOut();
     final googleUser = await _googleSignIn.signIn();
@@ -210,7 +242,9 @@ class RemoteDataManagerImpl implements RemoteDataManager {
   @override
   Future<void> logout() async {
     await _auth.signOut();
-    await _googleSignIn.signOut();
+    if (!kIsWeb) {
+      await _googleSignIn.signOut();
+    }
     Logger.print(
       data: 'User logged out successfully',
       from: 'RemoteDataSource.logout',
@@ -827,6 +861,17 @@ class RemoteDataManagerImpl implements RemoteDataManager {
           'reviewedAt': FieldValue.serverTimestamp(),
           'reviewedBy': currentUserId,
         });
+  }
+
+  @override
+  Future<String> saveFeedback(FeedbackModel feedback) async {
+    try {
+      final docRef = _fireStore.collection('feedback').doc();
+      await docRef.set({...feedback.toJson(), 'id': docRef.id});
+      return docRef.id;
+    } catch (e) {
+      throw Exception('Failed to save feedback: $e');
+    }
   }
 
   @override
